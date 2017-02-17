@@ -92,8 +92,9 @@ public class Controller {
 				CSVUtils.exportCSV(zipOut, dataList, limit);
 				// zipOut.write("喔哈哈".getBytes());
 			}
-			// zipOut.close();
-			response.setHeader("title", "导入文件中共xxxx条数据，成功导入xxxx条，失败xx条，请保存包含错误记录标识的csv文档");
+			zipOut.flush();//must
+			zipOut.close();//must
+//			response.setHeader("title", "导入文件中共xxxx条数据，成功导入xxxx条，失败xx条，请保存包含错误记录标识的csv文档");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -202,8 +203,8 @@ public class Controller {
 	public void downloadErrorXLS(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringRedisTemplate stringRedisTemplate = (StringRedisTemplate) SpringHelper.getBean("stringRedisTemplate");
 		String csvFileStr = stringRedisTemplate.opsForValue().get("error");
-//		StringBuffer sb = new StringBuffer(csvFileStr);
-		StringBuffer sb = new StringBuffer("aaaa,aaa,aaa,aaa");
+		StringBuffer sb = new StringBuffer(csvFileStr);
+//		StringBuffer sb = new StringBuffer("aaaa,aaa,aaa,aaa");
 		CSVUtils.exportWorkbook(response, sb, "error.csv");
 	}
 

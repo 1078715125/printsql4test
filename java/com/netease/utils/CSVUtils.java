@@ -328,8 +328,9 @@ public class CSVUtils {
 		// OutputStreamWriter(outputStream);
 		// BufferedWriter writer = new BufferedWriter(outputStreamWriter, 1024);
 
-		outputStream.write(sb.toString().getBytes());
-		// outputStream.flush();
+		outputStream.write(sb.toString().getBytes("utf-8"));//防止正文乱码
+//		outputStream.write(sb.toString().getBytes());
+		outputStream.flush();//must
 	}
 
 	private static Object reflectCellValue(Object dataObj, String columnIndex) {

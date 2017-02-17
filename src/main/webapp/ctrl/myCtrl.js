@@ -2,7 +2,7 @@
  * angulaJS 根配置
  */
 
-var myApp = angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'toaster','confirmDialogs',
+var myApp = angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'toaster','confirmDialogs','cgBusy',
 		'angular.chosen', 'ngAnimate' ]);
 
 
