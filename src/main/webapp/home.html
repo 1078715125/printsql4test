@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>Here`s home!</title>
+<!-- <script src="js/jquery/jquery-2.1.1.js"></script> -->
+<style>
+* {
+	padding: 0;
+	margin: 0
+}
+
+.box {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.2);
+	display: none;
+}
+
+.box1 {
+	width: 500px;
+	height: 500px;
+	position: fixed;
+	left: 50%;
+	top: 25%;
+	margin-left: -250px;
+	border: 1px solid #000000;
+}
+</style>
+<script>
+	// 	$(function() {
+	// 		$("#b").click(function() {
+	// 			var str = $("#str").val();
+	// 			var url = "/query";
+	// 			var param = {
+	// 				"str" : str
+	// 			};
+	// 			$('.box').hide();
+	// 			$.post(url, param, function(data) {
+	// 				alert(data);
+	// 			}, "json");
+	// 			return false;
+	// 		});
+
+	// 	});
+</script>
+<script type="text/ng-template" id="myModelContent.html">
+		<!DOCTYPE html>
+		<html>
+		<body>
+		<div class="modal-header row">
+			<h3 class="modal-title col-sm-8">$modal模态框</h3>
+			<div class="col-sm-4"><button class="close" ng-click="close()">x</button></div>
+		</div>
+		<div class="modal-body">
+			<ul>
+				<li ng-repeat="item in items">
+				 <a ng-click="selected.item = item">{{item}}</a> 
+				</li>
+			</ul>
+				当前选择： <b>{{selected.item}}</b>
+		</div>
+
+		<div class="modal-footer">
+			<button class="btn btn-primary" ng-click="ok()">
+			确认
+			</button>
+			<button class="btn btn-warning" ng-click="cancel()">退出</button>
+		</div>
+		
+		</body>
+		</html>
+	</script>
+</head>
+<body>
+	<div class="box">
+		<div class="box1">
+			<a href="javascript:;" onclick="$('.box').hide()" class="close">关闭</a>
+			<div>
+				<form action="/query" method="post">
+					<input id="str" name="str" type="text" ng-model="str"><br>
+					<input type="button" id="b" value="提交" ng-click='query()'>
+				</form>
+			</div>
+		</div>
+	</div>
+	<a href="javascript:;" onclick="$('.box').show()" class="show">显示</a>
+	<button class="btn btn-cancle" ng-click="msg()">wohaha</button>
+	<hr>
+	<hr>
+<!-- 	<select class="form-control" ng-model="selected" ng-options="item for item in items" chosen> -->
+	<div style="background-color: #abc;">
+		<div
+			style="color: #fff; font-size: 30px; font-weight: bold; text-shadow: 3px 3px 3px #ccc; -webkit-text-shadow: 3px 3px 3px #ccc; text-align: center; margin-top: 30px;">$model演示</div>
+		<section class="row">
+			<section class="col-md-6"
+				style="margin: 40px auto; float: none; background: #fff; padding: 30px;">
+
+				<button class="btn btn-info" ng-click="open()">点我！</button>
+				<button class="btn btn-success" ng-click="open('lg')">大模态</button>
+				<button class="btn btn-danger" ng-click="open('sm')">小模态</button>
+				<hr>
+				<div ng-show="selected">当前选择：{{selected}}</div>
+			</section>
+		</section>
+	</div>
+	<div>
+		<img alt="a" src="" id="img1">
+		<img alt="b" src="" id="img2">
+	</div>
+</body>
+</html>

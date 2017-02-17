@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>上传数据文件angular.element(this).scope().</title>
+
+</style>
+</head>
+<body>
+	<div ng-init="init()" class="row">
+		<form class="form-horizontal col-md-8 col-md-offset-3" role="form"
+			novalidate>
+			<div class="row">
+				<div class="col-md-2">
+					<a class="btn btn-info" ng-click="downLoad(1)" 
+					style="margin-top: 10px" popover="压缩包里只有一个文件哦！" popover-trigger="mouseenter" 
+					popover-placement="bottom">下载1个</a>
+				</div>
+				<div class="col-md-2">
+					<a class="btn btn-warning" ng-click="downLoad(2)" style="margin-top: 10px"
+					popover="压缩包里会有两个文件哦！" popover-trigger="mouseenter" 
+					popover-placement="bottom">下载2个</a>
+				</div>
+				<div class="col-md-2">
+					<a class="btn btn-danger" ng-click="downLoad(3)" style="margin-top: 10px"
+					popover="压缩包可是会有三个文件哦！" popover-trigger="mouseenter" 
+					popover-placement="bottom">下载3个</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

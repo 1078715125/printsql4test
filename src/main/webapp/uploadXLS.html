@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>上传数据文件angular.element(this).scope().</title>
+<style type="text/css">
+.file {
+	position: relative;
+	display: inline-block;
+	padding: 4px 12px;
+	overflow: hidden;
+	text-decoration: none;
+	text-indent: 0;
+	line-height: 20px;
+	font-size: 16px;
+}
+
+.file input {
+	position: absolute;
+	font-size: 100px;
+	right: 0;
+	top: 0;
+	opacity: 0;
+}
+</style>
+</head>
+<body>
+	<div ng-init="init()" class="row" cg-busy="{promise:promise,templateUrl:'',message:'正在加载,请稍等...',backdrop:true,delay:0,minDuration:0}">
+		<form class="form-horizontal col-md-8 col-md-offset-3" role="form"
+			novalidate>
+			<div class="row">
+				<span ng-if="error&&showMsg" style="color: red;">请上传xls、xlsx或csv文件！</span>
+			</div>
+			<div class="row">
+				<div class="col-md-2">
+					<a href="javascript:;" class="file" style="margin-top: 10px">{{display}}
+						<input type="file" ng-model="file" class="form-control"
+						onchange="angular.element(this).scope().checkFile(this)" />
+					</a>
+				</div>
+				<div class="col-md-4">
+					<input type="text" class="form-control" readonly="readonly"
+						ng-model="file.name" ng-if="file" />
+				</div>
+			</div>
+			<div>
+				<button class="btn btn-success" ng-click="upload()"
+					ng-disabled="error">上传</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
