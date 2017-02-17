@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test checkbox!</title>
+</head>
+
+<script type="text/javascript">
+	$(function() {
+
+		$("#submit").click(function() {
+			var checked = $("input:checked");
+			if (checked.size() == 0) {
+				alert("error!");
+				return;
+			}
+			var name = new Array();
+			var func = new Array();
+			var prop = {};
+			for (i = 0; i < checked.size(); i++) {
+				var selectid = $(checked[i]).attr("name");
+				var select = $("#" + selectid);
+				// 				name.push(select.attr("name"));
+				// 				func.push(select.val());
+				// 				name[i] = select.attr("name");
+				// 				func[i] = select.val();
+				prop["field[" + i + "]"] = select.attr("name");
+				prop["function[" + i + "]"] = select.val();
+			}
+			var data = {
+				"field" : name,
+				"function" : func
+			};
+			// 			console.log(data);
+			console.log(prop);
+			$.post(ctx + "/check", prop, function(data) {
+				alert(data);
+			}, "json");
+		});
+
+	});
+	function clickDownload(aLink){  
+         var str = "栏位1,栏位2,栏位3\n值1,值2,值3";  
+         str =  encodeURIComponent(str);  
+         aLink.href = "data:text/csv;charset=utf-8,\ufeff"+str;  //BOM头 '\ufeff'防止中文乱码
+//          aLink.click();
+         return false;
+    }  
+</script>
+
+<body>
+	<div >
+		<table class="table table-striped table-bordered table-condensed">
+			<tr>
+				<th>名称名</th>
+				<th>函数名</th>
+				<th>操作</th>
+			</tr>
+			<tr>
+				<th>a字段</th>
+				<th><select id="select_a" name="a">
+						<option value="1">1</option>
+						<option value="2">2</option>
+				</select></th>
+				<th><input type="checkbox" id="c_a" name="select_a"></th>
+			</tr>
+			<tr>
+				<th>b字段</th>
+				<th><select id="select_b" name="b">
+						<option value="1">1</option>
+						<option value="2">2</option>
+				</select></th>
+				<th><input type="checkbox" id="c_b" name="select_b"></th>
+			</tr>
+			<tr>
+				<th>c字段</th>
+				<th><select id="select_c" name="c">
+						<option value="1">1</option>
+						<option value="2">2</option>
+				</select></th>
+				<th><input type="checkbox" id="c_c" name="select_c"></th>
+			</tr>
+		</table>
+		<button id="submit">立即提交</button>
+	</div>
+	<div >
+		<a id="test1" download="downlaod.txt" href="data:text/txt;charset=utf-8,download Test Data">download.txt</a><br/>
+		<a id="testCsv" onclick="clickDownload(this)" download="downlaod.csv" href="#">downlaod.csv</a>
+	</div>
+</body>
+
+
+</html>

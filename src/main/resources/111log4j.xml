@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %5p [%t] (%c:%L) - %m%n" />
+		</layout>
+	</appender>
+	<appender name="apiAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="logs/api.log"/>
+        <param name="Append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %5p [%t] (%F:%L) - %m%n"/>
+        </layout>
+    </appender>
+    <!-- 性能测试日志 -->
+    <appender name="debugLog" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="logs/debug.log"/>
+        <param name="Append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %5p [%t] (%F:%L) - %m%n"/>
+        </layout>
+    </appender>
+    
+	<logger name="java.sql" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+<!-- 	<logger name="java.sql.Statement" additivity="false"> -->
+<!-- 		<level value="DEBUG" /> -->
+<!-- 		<appender-ref ref="consoleAppender" /> -->
+<!-- 	</logger> -->
+<!-- 	<logger name="java.sql.Connection" additivity="false"> -->
+<!-- 		<level value="DEBUG" /> -->
+<!-- 		<appender-ref ref="consoleAppender" /> -->
+<!-- 	</logger> -->
+<!-- 	<logger name="java.sql.PreparedStatement" additivity="false"> -->
+<!-- 		<level value="debug" /> -->
+<!-- 		<appender-ref ref="consoleAppender" /> -->
+<!-- 	</logger> -->
+	
+	<logger name="com.netease" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+	<logger name="org.springframework" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+
+
+	<logger name=" org.springframework.jdbc" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+	
+	<!-- MyBatis控制台打印日志 -->
+	<logger name="org.apache.ibatis" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="consoleAppender" />
+	</logger>
+	
+	
+	<logger name="apilog" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="apiAppender" />
+	</logger>
+	<logger name="debugLog" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="debugLog" />
+	</logger>
+<!-- 		<priority value="DEBUG" /> -->
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="consoleAppender" />
+	</root>
+
+</log4j:configuration>
