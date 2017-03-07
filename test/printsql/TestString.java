@@ -8,6 +8,13 @@ import org.junit.Test;
 public class TestString {
 
 	@Test
+	public void test4() {
+		String str = "喔哈哈.csV";
+		boolean flag = str.toLowerCase().endsWith("csv");
+		System.out.println(flag);
+	}
+	
+	@Test
 	public void test3() {
 		List<String> l1 = new ArrayList<String>();
 		l1.addAll(null);

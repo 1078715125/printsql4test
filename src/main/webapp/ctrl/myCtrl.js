@@ -6,7 +6,7 @@ var myApp = angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'toaster','conf
 		'angular.chosen', 'ngAnimate' ]);
 
 
-myApp.factory('formDataObject', function() {//用于form file upload
+myApp.factory('formDataObject', function() {// 用于form file upload
 	return function(data) {
 		var fd = new FormData();
 		angular.forEach(data, function(value, key) {
@@ -29,7 +29,7 @@ myApp.config([ '$routeProvider', function($routeProvider, $routeParams) {
 } ]);
 
 myApp.controller('myCtrl', function($rootScope, $scope, $interval, $http,
-		$modal, $log, toaster) {
+		$modal, $log, toaster,$location, $anchorScroll) {
 	// alert('欢迎回家！' + moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));
 	$scope.$on('notify', function(event, toastData) { // 事件通信-接受
 		 toaster.pop(toastData.type, toastData.title, toastData.info,
@@ -88,7 +88,17 @@ myApp.controller('myCtrl', function($rootScope, $scope, $interval, $http,
 			$log.info('Modal dismissed at: '
 					+ moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));
 		});
+	};
+	$scope.numbers = {
+		"自然数" : [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15",
+				"16", "17", "18", "19", "" ],
+		"质数" : [ "2", "3", "5", "7", "11", "13", "17", "19", "23", "29" ]
+	};
+	$scope.jumper = function(key) {
+		$location.hash(key);
+		$anchorScroll();
 	}
+
 });
 
 myApp.controller('ModalInstanceCtrl', function($scope, $modalInstance, items,
