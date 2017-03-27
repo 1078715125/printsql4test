@@ -19,7 +19,7 @@ public class ThreeTask extends BaseTask {
 	public void doTask() {
 		String name = this.getClass().getName();
 		log.info(name + "任务开始。。。");
-		System.out.println("3..." + DateUtils.printNow() + "hello，我是任务3！！！");
+		System.out.println("3..." + DateUtils.printNow() + "hello，我是任务3！！！wohaha");
 		log.info(name + "任务结束。。。");
 	}
 
