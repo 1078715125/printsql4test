@@ -18,7 +18,7 @@ public class TwoTask extends BaseTask {
 	public void doTask() {
 		String name = this.getClass().getName();
 		log.info(name + "任务开始。。。");
-		System.out.println("2..." + DateUtils.printNow() + "喔哈哈，我是任务2！！！");
+		System.out.println("2..." + DateUtils.printNow() + "喔哈哈，我是任务2！！！wohaha");
 		log.info(name + "任务结束。。。");
 	}
 
