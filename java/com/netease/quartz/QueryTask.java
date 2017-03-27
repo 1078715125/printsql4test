@@ -21,7 +21,7 @@ public class QueryTask extends BaseTask {
 	@Override
 	public void doTask() {
 		String name = this.getClass().getName();
-		log.info(name + "任务开始。。。");
+		log.info(name + "任务开始。。。喔哈哈");
 //		IOC = getSpringIOC();
 //		Service service = (Service) IOC.getBean("service");
 		// Service service = (Service) getSpringIOC().getBean("service");
