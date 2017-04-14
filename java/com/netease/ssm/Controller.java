@@ -1,19 +1,12 @@
 package com.netease.ssm;
 
-import java.io.BufferedOutputStream;
-import java.io.InputStream;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.netease.listener.SpringHelper;
+import com.netease.utils.*;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,14 +15,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.netease.listener.SpringHelper;
-import com.netease.utils.CSVUtils;
-import com.netease.utils.DateUtils;
-import com.netease.utils.EntityReflect;
-import com.netease.utils.ExtLimit;
-import com.netease.utils.JsonHelper;
-import com.netease.utils.JsonResult;
-import com.netease.utils.JsonResultFactory;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @org.springframework.stereotype.Controller
 @RequestMapping
@@ -62,34 +58,34 @@ public class Controller {
 			for (int i = 1; i <= num; i++) {
 				ZipEntry entry = new ZipEntry(i + ".csv");
 				zipOut.putNextEntry(entry);
-				// HSSFWorkbook wb = new HSSFWorkbook();
-				// HSSFSheet sheet = wb.createSheet("测试");
-				// for (int j = 0; j < 5; j++) {
-				// HSSFRow row = sheet.createRow(j);
-				// for (int k = 0; k < 3; k++) {
-				// if (j == 0) {
-				// HSSFCell cell = row.createCell(k);
-				// cell.setCellValue("测试" + k);
-				// } else {
-				// HSSFCell cell = row.createCell(k);
-				// cell.setCellValue(j + "" + k);
-				// }
-				//
-				// }
-				// }
-				// wb.write(zipOut);
-				List<CSV> dataList = new ArrayList<CSV>();
-				for (int j = 0; j < 100; j++) {
-					dataList.add(new CSV(j + 1, "新闻客户端", "头条", "首页", "第四条", "信息流", j + 1, "图文", 0.12 + j, new Date(),
-							new Date()));
-					dataList.add(new CSV(j + 2, "新闻客户端", "头条", "首页", "第四条", "信息流", j + 2, "多图", 0.28 + j, new Date(),
-							new Date()));
+				Workbook wb = new HSSFWorkbook();
+				Sheet sheet = wb.createSheet("测试");
+				for (int j = 0; j < 5; j++) {
+					Row row = sheet.createRow(j);
+					for (int k = 0; k < 3; k++) {
+						if (j == 0) {
+							Cell cell = row.createCell(k);
+							cell.setCellValue("测试" + k);
+						} else {
+							Cell cell = row.createCell(k);
+							cell.setCellValue(j + "" + k);
+						}
+
+					}
 				}
-				ExtLimit limit = new ExtLimit();
-				limit.setExp_column_names("营销平台ID,频道,栏目,页面位置,广告位置,广告形式,展现形式ID,展现形式,刊例单价（元/CPM）,生效开始时间,生效结束时间");
-				limit.setExp_column_indexs(
-						"id,channelName,programaName,yemian,positionName,adTypeName,showTypeId,showTypeName,price,startDate,endDate");
-				CSVUtils.exportCSV(zipOut, dataList, limit);
+				wb.write(zipOut);
+//				List<CSV> dataList = new ArrayList<CSV>();
+//				for (int j = 0; j < 100; j++) {
+//					dataList.add(new CSV(j + 1, "新闻客户端", "头条", "首页", "第四条", "信息流", j + 1, "图文", 0.12 + j, new Date(),
+//							new Date()));
+//					dataList.add(new CSV(j + 2, "新闻客户端", "头条", "首页", "第四条", "信息流", j + 2, "多图", 0.28 + j, new Date(),
+//							new Date()));
+//				}
+//				ExtLimit limit = new ExtLimit();
+//				limit.setExp_column_names("营销平台ID,频道,栏目,页面位置,广告位置,广告形式,展现形式ID,展现形式,刊例单价（元/CPM）,生效开始时间,生效结束时间");
+//				limit.setExp_column_indexs(
+//						"id,channelName,programaName,yemian,positionName,adTypeName,showTypeId,showTypeName,price,startDate,endDate");
+//				CSVUtils.exportCSV(zipOut, dataList, limit);
 				// zipOut.write("喔哈哈".getBytes());
 			}
 			zipOut.flush();//must

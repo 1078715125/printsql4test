@@ -3,6 +3,7 @@ package com.netease.listener;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * 获取ApplicationContext的工具类
@@ -21,9 +22,19 @@ public class SpringHelper implements ApplicationContextAware {
 	
 	public synchronized static Object getBean(String name) {
 		if (context == null) {
-			 throw new RuntimeException("无法获取当前环境的ApplicationContext，或尝试重启。。。");
+//			 throw new RuntimeException("无法获取当前环境的ApplicationContext，或尝试重启。。。");
+			initApplicationContext();
 		}
 		return context.getBean(name);
 	}
 
+	/**
+	 *  手动加载spring方法
+	 */
+	public static void initApplicationContext() {
+		if (context == null) {
+			context = new ClassPathXmlApplicationContext(
+					"classpath*:**//applicationContext*.xml");
+		}
+	}
 }

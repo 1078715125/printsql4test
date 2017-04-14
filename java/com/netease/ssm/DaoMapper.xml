@@ -5,7 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.netease.ssm.Dao">
 
-	
+	<insert id="batchInsert" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="java.util.List" >
+		insert into person(name,sex) VALUES
+		<foreach collection="list" separator="," item="item" >
+			(#{item.name},#{item.sex})
+		</foreach>
+	</insert>
 	
 	<select id="query" resultType="com.netease.ssm.Person">
 		select * from person
