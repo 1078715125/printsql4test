@@ -5,10 +5,8 @@
 <link rel="stylesheet" href="${ctx}/js/chosen/chosen.bootstrap.min.css">
 <link rel="stylesheet" href="${ctx}/js/bootstrap/3.3.0/css/bootstrap.min.css">
 	
-<script src="${ctx}/js/jquery/jquery-2.1.1.js"></script>
+<script src="${ctx}/js/jquery/jquery-2.1.1.js?v=${sysVersion}"></script>
 <script src="${ctx}/js/bootstrap/3.3.0/js/bootstrap.min.js?v=${sysVersion}"></script>
-<script src="${ctx}/js/echart/echarts.js"></script>
-<script src="${ctx}/js/echart/echarts-all.js"></script>
 
 <script src="${ctx}/js/angular/angular.min.js?v=${sysVersion}"></script>
 <script src="${ctx}/js/angular/angular-cookies.js?v=${sysVersion}"></script>
@@ -31,6 +29,11 @@
 <link rel="stylesheet" href="${ctx}/js/chosen/chosen.bootstrap.min.css">
 <link rel="stylesheet" href="${ctx}/js/bootstrap/3.3.0/css/bootstrap-switch.min.css">
 
+<%-- <script src="${ctx}/js/echart/echarts.js?v=${sysVersion}"></script> --%>
+<script src="${ctx}/js/echart/echarts-all.js?v=${sysVersion}"></script>
+<%-- <script src="${ctx}/js/echart/echarts.min.js?v=${sysVersion}"></script>
+<script src="${ctx}/js/echart/theme/shine.js?v=${sysVersion}"></script> --%>
+
 
 <script
 	src="${ctx}/js/angular/angular-busy/angular-busy.js?v=${sysVersion}"></script>
@@ -50,3 +53,4 @@
 <script src="${ctx}/ctrl/chartCtrl.js?v=${sysVersion}"></script>
 <script src="${ctx}/ctrl/uploadCtrl.js?v=${sysVersion}"></script>
 <script src="${ctx}/ctrl/downloadCtrl.js?v=${sysVersion}"></script>
+<script src="${ctx}/ctrl/collapsecbCtrl.js?v=${sysVersion}"></script>

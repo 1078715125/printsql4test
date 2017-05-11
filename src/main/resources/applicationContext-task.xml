@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd        
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd        
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+<!-- 	<bean id="queryTask" class="com.netease.quartz.QueryTask" scope="singleton"></bean> -->
+<!-- 	<bean id="queryTaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> -->
+<!-- 		<property name="targetObject" ref="queryTask"></property> -->
+<!-- 		<property name="targetMethod" value="task"></property> -->
+<!-- 		<property name="concurrent" value="false"></property> -->
+<!-- 	</bean> -->
+	<bean id="queryTaskDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		  <!-- 指定任务Bean的实现类 -->  
+		<property name="jobClass" value="com.netease.quartz.QueryTask"></property>
+		<!-- 为任务Bean注入属性 -->  
+		<property name="jobDataAsMap">
+			<map>
+			</map>
+		</property>
+		<property name="durability" value="true"></property>
+		<property name="name" value="queryTaskDetail-wohaha"></property>
+	</bean>
+	<bean id="queryTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="description" value="简单查询任务"></property>
+		<property name="jobDetail" ref="queryTaskDetail"></property>
+		<property name="cronExpression" value="0 * * * *  ?"></property>
+		<property name="name" value="queryTaskTrigger-wohaha"></property>
+	</bean>
+
+<!-- 	<bean id="twoTask" class="com.netease.quartz.TwoTask" scope="singleton"></bean> -->
+<!-- 	<bean id="twoTaskDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> -->
+<!-- 		<property name="targetObject" ref="twoTask"></property> -->
+<!-- 		<property name="targetMethod" value="task"></property> -->
+<!-- 		<property name="concurrent" value="false"></property> -->
+<!-- 	</bean> -->
+	<bean id="twoTaskDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		  <!-- 指定任务Bean的实现类 -->  
+		<property name="jobClass" value="com.netease.quartz.TwoTask"></property>
+		<property name="durability" value="true"></property>
+	</bean>
+	<bean id="twoTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="description" value="任务2"></property>
+		<property name="jobDetail" ref="twoTaskDetail"></property>
+		<property name="cronExpression" value="0 * * * *  ?"></property>
+	</bean>
+	<bean id="threeTaskDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		  <!-- 指定任务Bean的实现类 -->  
+		<property name="jobClass" value="com.netease.quartz.ThreeTask"></property>
+		<property name="durability" value="true"></property>
+	</bean>
+	<bean id="threeTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="description" value="任务3"></property>
+		<property name="jobDetail" ref="threeTaskDetail"></property>
+		<property name="cronExpression" value="0 * * * *  ?"></property>
+	</bean>
+
+	<!-- 集群调度器 -->
+	<!--<bean id="scheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.scheduler.instanceName">MyScheduler123</prop>
+				<prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+				&lt;!&ndash; 线程池配置 &ndash;&gt;
+				&lt;!&ndash; <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+				<prop key="org.quartz.threadPool.threadCount">20</prop>
+				<prop key="org.quartz.threadPool.threadPriority">5</prop> &ndash;&gt;
+				&lt;!&ndash; JobStore 配置 ,若SchedulerFactoryBean配置了datasoucrce，则spring会强制使用LocalDataSourceJobStore&ndash;&gt;
+&lt;!&ndash; 				<prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop> &ndash;&gt;
+
+				&lt;!&ndash; 集群配置 &ndash;&gt;
+				&lt;!&ndash; 属性为true，通知Scheduler实例要它参与到一个集群当中 &ndash;&gt;
+				<prop key="org.quartz.jobStore.isClustered">true</prop>
+				&lt;!&ndash; 定义了Scheduler实例检入到数据库中的频率(单位：毫秒) &ndash;&gt;
+				<prop key="org.quartz.jobStore.clusterCheckinInterval">15000</prop>
+				&lt;!&ndash; 尝试一次修复能处理的错过触发的触发器的最大数量，默认20 &ndash;&gt;
+				<prop key="org.quartz.jobStore.maxMisfiresToHandleAtATime">5</prop>
+				&lt;!&ndash; 容许触发器错过其下一个触发时间的最大毫秒数，超过该值便为misfire状态 &ndash;&gt;
+				<prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
+
+				<prop key="org.quartz.jobStore.tablePrefix">QRTZ_</prop>
+				
+				<prop key="org.quartz.scheduler.skipUpdateCheck">true</prop>  
+			    <prop key="org.terracotta.quartz.skipUpdateCheck">true</prop> 
+			</props>
+		</property>
+		<property name="schedulerName" value="MyScheduler-Cluster" />
+
+		&lt;!&ndash;必须的，QuartzScheduler 延时启动，应用启动完后 QuartzScheduler 再启动 &ndash;&gt;
+		<property name="startupDelay" value="30" />
+
+		<property name="applicationContextSchedulerContextKey" value="appKey" />
+
+		&lt;!&ndash;可选，QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了 &ndash;&gt;
+		<property name="overwriteExistingJobs" value="true" />
+		
+ 		<property name="jobFactory" ref="autowiringSpringBeanJobFactory"></property>
+        
+		&lt;!&ndash; 设置自动启动 &ndash;&gt;
+		<property name="autoStartup" value="true" />
+
+		&lt;!&ndash; 注册触发器 &ndash;&gt;
+		<property name="triggers">
+			<list>
+&lt;!&ndash; 				<ref bean="queryTaskTrigger"/> &ndash;&gt;
+&lt;!&ndash; 				<ref bean="twoTaskTrigger"/> &ndash;&gt;
+&lt;!&ndash; 				<ref bean="threeTaskTrigger"/> &ndash;&gt;
+			</list>
+		</property>
+	</bean>-->
+
+</beans>	

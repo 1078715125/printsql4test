@@ -13,19 +13,20 @@
 		http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<context:component-scan base-package="com.netease">
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/> 
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-	
+
 	<context:property-placeholder location="classpath:jdbc.properties" />
-	
+	<!-- <import resource="job-register.xml" /> -->
+
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="${jdbc.driverClass}"></property>
-		<!--本地环境-->
-		<property name="url"
-			value="${jdbc.jdbcUrl}"></property>
+		<!--本地环境 -->
+		<property name="url" value="${jdbc.jdbcUrl}"></property>
 		<property name="username" value="${jdbc.user}"></property>
 		<property name="password" value="${jdbc.password}"></property>
-		
+
 
 		<property name="maxActive" value="100"></property>
 		<property name="maxIdle" value="30"></property>
@@ -38,12 +39,12 @@
 		<property name="mapperLocations" value="classpath*:**/*Mapper*.xml"></property>
 		<property name="dataSource" ref="dataSource" />
 		<!-- 装配MyBatis配置文件 -->
-		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
 	</bean>
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 		<property name="annotationClass" value="org.springframework.stereotype.Repository"></property>
-		
+
 		<property name="basePackage" value="com.netease"></property>
 	</bean>
 
@@ -55,7 +56,9 @@
 	<tx:annotation-driven />
 
 	<bean id="springHelper" class="com.netease.listener.SpringHelper"></bean>
-	
+
 	<bean id="autowiringSpringBeanJobFactory" class="com.netease.quartz.AutowiringSpringBeanJobFactory"></bean>
+
+
 
 </beans>	

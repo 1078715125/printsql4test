@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    <link rel="stylesheet" href="00000.css">
+    <style type="text/css">
+        .root {
+            background: #121212;
+            width: 100%;
+            height: 300px;
+            float: left;
+        }
+
+        .one1 {
+            background: red;
+            width: 100%;
+            height: 300px;
+            float: left
+        }
+
+        .one1_div {
+            float: left;
+            margin: 25px 0 0 0;
+            width: 30%;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .btn-design {
+            text-align: center;
+            color: #333333;
+            border-color: #E4E4E4;
+        }
+
+        .btn-design:active {
+            background-color: #F2F2F2;
+        }
+
+        label {
+            font-weight: normal;
+        }
+
+        .area {
+            min-height: 250px;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="root" style="margin: 0px 0px 10px 20px;">
+    <div class="row col-md-12" style="margin-bottom: 10px;">
+        <b>兴趣关注点</b>
+        ·····························································································································
+    </div>
+    <div class="row col-md-12">
+        <!--<tabset>
+            &lt;!&ndash;<uib-tab heading="{{platform.name}}" ng-repeat="platform in platformList" select="changePlat(platform.id)"></uib-tab>&ndash;&gt;
+            <tab heading="广泛兴趣" select="changeTab(1)"></tab>
+            <tab heading="精准兴趣" select="changeTab(2)"></tab>
+        </tabset>-->
+        <div class="btn-group">
+            <label class="btn btn-default" ng-model="interestTab" btn-radio="1" style="width: 112px;"
+                   ng-click="initInterest()">广泛兴趣</label>
+            <label class="btn btn-default" ng-model="interestTab" btn-radio="2" style="width: 112px;"
+                   ng-click="initInterest()">精准兴趣</label>
+        </div>
+        <div ng-show="interestTab == 1" style="width: 500px;">
+            <div style="margin:20px 0px 10px 0px;">
+                <input type="checkbox" ng-model="allChecked" id="allChecked" ng-click="isAllChecked()">
+                <label for="allChecked">全选</label>
+            </div>
+            <label ng-repeat="item in data" style="width: 100px;">
+                <input id="iteminterest{{item.id}}" type="checkbox" ng-model="item.checked" ng-click="noChecked()">
+                <label for="iteminterest{{item.id}}">{{item.name}}</label>
+            </label>
+        </div>
+
+        <div ng-show="interestTab == 2" class="area">
+            <div ng-repeat="one in data" style="margin-top: 15px;">
+                <a id="collapse-{{one.id}}" class="glyphicon  glyphicon-minus-sign" ng-show="one.child" ng-click="toCollapsed(one)"></a>
+                <input id="oneinterest{{one.id}}" type="checkbox" ng-model="one.checked" ng-click="groupChecked(one)">
+                <label for="oneinterest{{one.id}}">{{one.name}}</label>
+                <div style="width: 550px;margin-left: 25px;" collapse="one.isCollapsed">
+                    <label ng-repeat="two in one.child" style="width: 100px;">
+                        <input id="twointerest{{two.id}}" type="checkbox" ng-model="two.checked"
+                               ng-click="noGroupChecked(one)">
+                        <label for="twointerest{{two.id}}">{{two.name}}</label>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

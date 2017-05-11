@@ -27,10 +27,12 @@
 	<a href="${ctx}/#/upload">上传XLS数据</a>
 	<a href="${ctx}/#/download">下载数据</a>
 	<a href="${ctx}/#/choseCheckBox">checkbox</a>
+	<a href="${ctx}/#/collapse">collapse-checkbox</a>
 	<a href="${ctx}/#/index">回首页</a>
 	<hr style="border-top-color: red;"/>
 	<div ng-view></div>
 	<toaster-container toaster-options="{'time-out': 3000, 'close-button':true, 'position-class': 'toast-bottom-right'}"></toaster-container>
+	<br><br><br><br>
 	<hr style="border-top-color: blue;"/>
 	<h2>this is bottom!</h2>
 </body>

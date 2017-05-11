@@ -39,7 +39,17 @@ myApp.controller('myCtrl', function($rootScope, $scope, $interval, $http,
 	$scope.msg = function() {
 		toaster.pop("info", "hello", "wohaha");
 		alert("aaa");
-	}
+	};
+
+	$scope.cors = function() {
+		// var url = "http://test.business.ka.163.com/omp/priceVersion/importPrice?id=1&platform=1&token=8d8fh4az3434hjkklsf9";
+		var url = "http://test.business.ka.163.com/omp/priceVersion/search?id=1&platform=1&token=8d8fh4az3434hjkklsf9";
+        $.post(url, {
+            "str" : $scope.str
+        }, function(data) {
+            alert(data);
+        }, "html");
+	};
 
 	$scope.query = function() {
 		// $http.post('/query', {"str":$scope.str}).success(function(data){

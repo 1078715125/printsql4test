@@ -15,7 +15,7 @@ myApp.controller(
 				'chartController',
 				function($rootScope, $scope, $interval, $http, $location) {
 					// 基于准备好的dom，初始化echarts图表
-					var myChart = echarts.init(document.getElementById('main'));
+					var myChart = echarts.init(document.getElementById('main'),'shine');
 
 					var option = {
 						title : {

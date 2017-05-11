@@ -1,5 +1,6 @@
 package com.netease.utils;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -277,7 +278,7 @@ public class CSVUtils {
 		sb.append(limit.getExp_column_names()).append(DEFAULT_END);
 		String[] exp_column_indexs = limit.getExp_column_indexs().split(",");
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//		DateFormat dfh = new SimpleDateFormat("yyyy-MM-dd HH");
+		// DateFormat dfh = new SimpleDateFormat("yyyy-MM-dd HH");
 		for (int i = 0; i < dataList.size(); i++) {
 			Object dataObj = dataList.get(i);
 			for (int j = 0; j < exp_column_indexs.length; j++) {
@@ -320,7 +321,7 @@ public class CSVUtils {
 		return sb;
 	}
 
-	public static void exportCSV(OutputStream outputStream, List<?> dataList, ExtLimit limit) throws Exception {
+	public static void exportCSVBak(OutputStream outputStream, List<?> dataList, ExtLimit limit) throws Exception {
 		StringBuffer sb = genCSV(dataList, limit);
 		// 加上UTF-8文件的标识字符
 		outputStream.write(commonCsvHead);
@@ -328,13 +329,22 @@ public class CSVUtils {
 		// OutputStreamWriter(outputStream);
 		// BufferedWriter writer = new BufferedWriter(outputStreamWriter, 1024);
 
-		outputStream.write(sb.toString().getBytes("utf-8"));//防止正文乱码
-//		outputStream.write(sb.toString().getBytes());
-		outputStream.flush();//must
+		outputStream.write(sb.toString().getBytes("utf-8"));// 防止正文乱码
+		// outputStream.write(sb.toString().getBytes());
+		outputStream.flush();// must
+	}
+
+	public static void exportCSV(OutputStream outputStream, List<?> dataList, ExtLimit limit) throws Exception {
+		StringBuffer sb = genCSV(dataList, limit);
+		BufferedOutputStream bos = new BufferedOutputStream(outputStream, 1024);
+		// 加上UTF-8文件的标识字符
+		bos.write(commonCsvHead);
+		bos.write(sb.toString().getBytes("utf-8")); // 防止正文乱码
+		// outputStream.write(sb.toString().getBytes("utf-8")); //防止正文乱码
+		outputStream.flush(); // must
 	}
 
 	private static Object reflectCellValue(Object dataObj, String columnIndex) {
 		return EntityReflect.getObjectProperty(dataObj, columnIndex);
 	}
-
 }
