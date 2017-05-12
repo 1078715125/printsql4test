@@ -46,11 +46,104 @@
             overflow-y: auto;
             max-height: 300px;
         }
+
+        .ztree li {
+            display: inline-block;
+            margin: 0 0 30px 0;
+            width: 100%;
+        }
+
+        .ztree li span{
+            font-size: 14px;
+        }
+
+        .ztree li ul li {
+            float: left;
+            width: 150px;
+            margin: 15px 0 0 0;
+        }
+
+        .age{
+            width: 400px;
+            height: 150px;
+            position: relative;
+            border-radius: 5px;
+            border: 3px solid #F2F2f2;
+            /*margin: 20px 0 0 0;*/
+            padding: 0;
+        }
+        .age:after{
+            content: "";
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 20px solid #fff;
+            /*我们一般根据方向来写三角形，这样容易记忆；箭头指向的反方向的颜色设置为你想要的，然后箭头方向不要写，另外两个方向的颜色设置为transperent透明*/
+            position: absolute;
+            top: -20px;
+            left: 35%;
+            margin-left: -10px;
+        }
+        .age:before{
+            content: "";
+            border-left: 20px solid transparent;
+            border-right: 22px solid transparent;
+            border-bottom: 20px solid #F2F2f2;
+            position: absolute;
+            top: -22px;
+            /*写个三角形，沉在箭头下边，颜色设置成边框颜色，位置比箭头稍高一些（容器边框宽度值），就可以了*/
+            left: 35%;
+            margin-left: -10px;
+            z-index: -1;
+        }
     </style>
 </head>
 
 <body>
-<div id="root" style="margin: 0px 0px 10px 20px;">
+<form id="root" style="margin: 0px 0px 10px 20px;" class="">
+    <div class="row col-md-12" style="margin-bottom: 10px;">
+        <b>人群属性</b>
+        ·····························································································································
+    </div>
+    <div class="row col-md-3">
+        <div class="form-group form-group-sm  row">
+            <div class="col-md-3">性别：</div>
+            <div class="col-md-3">
+                <input type="radio" name="cast.sex" value="0" checked="checked" ng-model="cast.sexSelect" id="cast.sex0"/>
+                <label for="cast.sex0">不限</label>
+            </div>
+            <div class="col-md-2">
+                <input type="radio" name="cast.sex" value="1" ng-model="cast.sexSelect" id="cast.sex1"/>
+                <label for="cast.sex1">男</label>
+            </div>
+            <div class="col-md-2">
+                <input type="radio" name="cast.sex" value="2" ng-model="cast.sexSelect" id="cast.sex2"/>
+                <label for="cast.sex2">女</label>
+            </div>
+        </div>
+        <div class="form-group form-group-sm row">
+            <div class="col-md-3">年龄：</div>
+            <div class="col-md-3">
+                <input type="radio" name="cast.age" value="0" checked="checked" ng-model="cast.ageSelect" id="cast.age0"/>
+                <label for="cast.age0">不限</label>
+            </div>
+            <div class="col-md-3">
+                <input type="radio" name="cast.age" value="1" ng-model="cast.ageSelect" id="cast.age1"/>
+                <label for="cast.age1">自定义</label>
+            </div>
+            <div class="col-md-2">
+                <input type="text" ng-model="cast.ageDisplay" disabled style="width: 75px"/>
+            </div>
+        </div>
+        <div class="form-group form-group-sm row" ng-show="cast.ageSelect == 1">
+            <div class="col-md-3 col-md-offset-3 age " >
+                <!--<div slider ng-model="cast.age" start=1 end=10></div>-->
+                <div slider ng-from="cast.ageRange" ng-to="test.to" start=0 end=100 step=1></div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="row col-md-12" style="margin-bottom: 10px;">
         <b>兴趣关注点</b>
         ·····························································································································
@@ -66,6 +159,8 @@
                    ng-click="initInterest()">广泛兴趣</label>
             <label class="btn btn-default" ng-model="interestTab" btn-radio="2" style="width: 112px;"
                    ng-click="initInterest()">精准兴趣</label>
+            <label class="btn btn-default" ng-model="interestTab" btn-radio="3" style="width: 112px;"
+                   ng-click="initInterest()">精准兴趣2</label>
         </div>
         <div ng-show="interestTab == 1" style="width: 500px;">
             <div style="margin:20px 0px 10px 0px;">
@@ -80,7 +175,8 @@
 
         <div ng-show="interestTab == 2" class="area">
             <div ng-repeat="one in data" style="margin-top: 15px;">
-                <a id="collapse-{{one.id}}" class="glyphicon  glyphicon-minus-sign" ng-show="one.child" ng-click="toCollapsed(one)"></a>
+                <a id="collapse-{{one.id}}" class="glyphicon  glyphicon-minus-sign" ng-show="one.child"
+                   ng-click="toCollapsed(one)"></a>
                 <input id="oneinterest{{one.id}}" type="checkbox" ng-model="one.checked" ng-click="groupChecked(one)">
                 <label for="oneinterest{{one.id}}">{{one.name}}</label>
                 <div style="width: 550px;margin-left: 25px;" collapse="one.isCollapsed">
@@ -91,11 +187,17 @@
                     </label>
                 </div>
             </div>
+        </div>
+
+        <div ng-show="interestTab == 3" class="area">
+            <div style=" width:550px;overflow-y: scroll; overflow: auto;margin-top: 25px;">
+                <ul id="positionTree" class="ztree nomal-font" ng-init="initTree()"></ul>
+            </div>
 
         </div>
 
     </div>
 
-</div>
+</form>
 </body>
 </html>

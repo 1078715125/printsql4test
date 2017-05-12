@@ -6,6 +6,9 @@
 <link rel="stylesheet" href="${ctx}/js/bootstrap/3.3.0/css/bootstrap.min.css">
 	
 <script src="${ctx}/js/jquery/jquery-2.1.1.js?v=${sysVersion}"></script>
+<script src="${ctx}/js/jquery-ui/jquery-ui.js?v=${sysVersion}"></script>
+<link rel="stylesheet" href="${ctx}/js/jquery-ui/jquery-ui.css">
+
 <script src="${ctx}/js/bootstrap/3.3.0/js/bootstrap.min.js?v=${sysVersion}"></script>
 
 <script src="${ctx}/js/angular/angular.min.js?v=${sysVersion}"></script>
@@ -48,6 +51,15 @@
 <%-- <script src="${ctx}/js/moment/moment.min.js?v=${sysVersion}"></script> --%>
 <script src="${ctx}/js/moment/moment.js?v=${sysVersion}"></script>
 <script src="${ctx}/js/angular/confirmDialogs.js?v=${sysVersion}"></script>
+<script src="${ctx}/js/angular/angular-nouislider/nouislider.js?v=${sysVersion}"></script>
+
+<!-- zTree树 -->
+<link rel="stylesheet" href="${ctx}/js/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<%--  <link rel="stylesheet" href="${ctx}/resources/js/zTree/css/demo.css" type="text/css">  --%>
+<script src="${ctx}/js/zTree/js/jquery.ztree.core-3.5.js"></script>
+<script src="${ctx}/js/zTree/js/jquery.ztree.excheck-3.5.js"></script>
+<script src="${ctx}/js/zTree/js/jquery.ztree.exedit-3.5.js"></script>
+
 
 <script src="${ctx}/ctrl/myCtrl.js?v=${sysVersion}"></script>
 <script src="${ctx}/ctrl/chartCtrl.js?v=${sysVersion}"></script>
