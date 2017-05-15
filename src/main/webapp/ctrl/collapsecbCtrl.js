@@ -88,10 +88,14 @@ myApp.controller('collapseCheckBox', function ($rootScope, $scope, $interval, $h
             // noSwitching: true,
             // stepsArray: getStepsArray(),
             translate: function (value) {
-                if (value < AGE_MIN_VALUE || value > AGE_MAX_VALUE) {
-                    return "无限制";
+                // if (value < AGE_MIN_VALUE || value > AGE_MAX_VALUE) {
+                //     return "无限制";
+                // }
+                // return value + "岁";
+                if(validAge(value)){
+                    return value + "岁";
                 }
-                return value + "岁";
+                return "无限制";
             }
         }
     };
@@ -311,5 +315,21 @@ myApp.controller('collapseCheckBox', function ($rootScope, $scope, $interval, $h
         }
 
     }, true);// true:深度监听
+
+    /**
+     * 绑定class：age的回车事件
+     * @param event
+     */
+    $scope.ageKeyDown = function(event){
+        if(!event){
+            event = window.event;//火狐浏览器
+        }
+        //也可用下面的代替上面的if语句
+        //document.all可以判断浏览器是否是IE
+        var event=document.all?window.event:event;
+        if((event.keyCode || event.which) == 13){
+            $scope.setAgeDisplay();
+        }
+    };
 
 });
