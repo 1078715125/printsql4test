@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="${ctx}/js/bootstrap/3.3.0/css/bootstrap.min.css">
 	
 <script src="${ctx}/js/jquery/jquery-2.1.1.js?v=${sysVersion}"></script>
-<script src="${ctx}/js/jquery-ui/jquery-ui.js?v=${sysVersion}"></script>
-<link rel="stylesheet" href="${ctx}/js/jquery-ui/jquery-ui.css">
+<%--<script src="${ctx}/js/jquery-ui/jquery-ui.js?v=${sysVersion}"></script>--%>
+<%--<link rel="stylesheet" href="${ctx}/js/jquery-ui/jquery-ui.css">--%>
 
 <script src="${ctx}/js/bootstrap/3.3.0/js/bootstrap.min.js?v=${sysVersion}"></script>
 
@@ -51,7 +51,13 @@
 <%-- <script src="${ctx}/js/moment/moment.min.js?v=${sysVersion}"></script> --%>
 <script src="${ctx}/js/moment/moment.js?v=${sysVersion}"></script>
 <script src="${ctx}/js/angular/confirmDialogs.js?v=${sysVersion}"></script>
-<script src="${ctx}/js/angular/angular-nouislider/nouislider.js?v=${sysVersion}"></script>
+<%-- angular slider--%>
+<%--<script src="${ctx}/js/angular/noUiSlider/nouislider.js?v=${sysVersion}"></script>--%>
+<%--<link rel="stylesheet" href="${ctx}/js/angular/noUiSlider/nouislider.css?v=${sysVersion}">--%>
+<script src="${ctx}/js/angular/angular-slider/rzslider.js?v=${sysVersion}"></script>
+<link rel="stylesheet" href="${ctx}/js/angular/angular-slider/rzslider.css?v=${sysVersion}">
+
+
 
 <!-- zTree树 -->
 <link rel="stylesheet" href="${ctx}/js/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">

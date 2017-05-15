@@ -70,7 +70,7 @@
             border-radius: 5px;
             border: 3px solid #F2F2f2;
             /*margin: 20px 0 0 0;*/
-            padding: 0;
+            padding: 0 10% 0 10%;
         }
         .age:after{
             content: "";
@@ -95,6 +95,54 @@
             margin-left: -10px;
             z-index: -1;
         }
+        /** 定制angular-slider start*/
+        .custom-slider.rzslider .rz-bar {
+            background: #F2F2F2;
+            height: 10px;
+        }
+        .custom-slider.rzslider .rz-selection {
+            background: green;
+        }
+
+        .custom-slider.rzslider .rz-pointer {
+            width: 10px;
+            height: 26px;
+            top: -9px; /* to remove the default positioning */
+            bottom: 0;
+            background-color: #D7D7D7;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+        }
+        .custom-slider.rzslider .rz-pointer:focus {
+            background-color: #8C8C8C;
+        }
+
+        .custom-slider.rzslider .rz-pointer:after {
+            display: none;
+        }
+
+        .custom-slider.rzslider .rz-bubble {
+            bottom: 14px;
+        }
+
+        .custom-slider.rzslider .rz-limit {
+            font-weight: bold;
+            color: #FFF;
+        }
+
+        .custom-slider.rzslider .rz-tick {
+            width: 1px;
+            height: 10px;
+            margin-left: 4px;
+            border-radius: 0;
+            background: #F2F2F2;
+            top: -1px;
+        }
+
+        .custom-slider.rzslider .rz-tick.rz-selected {
+            background: #F2F2F2;
+        }
+        /** 定制angular-slider end*/
     </style>
 </head>
 
@@ -123,21 +171,36 @@
         <div class="form-group form-group-sm row">
             <div class="col-md-3">年龄：</div>
             <div class="col-md-3">
-                <input type="radio" name="cast.age" value="0" checked="checked" ng-model="cast.ageSelect" id="cast.age0"/>
+                <input type="radio" name="cast.age" value="0" checked="checked" ng-model="cast.ageSelect" id="cast.age0" ng-click="resetAge()"/>
                 <label for="cast.age0">不限</label>
             </div>
             <div class="col-md-3">
-                <input type="radio" name="cast.age" value="1" ng-model="cast.ageSelect" id="cast.age1"/>
+                <input type="radio" name="cast.age" value="1" ng-model="cast.ageSelect" id="cast.age1" ng-click="resetAge()"/>
                 <label for="cast.age1">自定义</label>
             </div>
-            <div class="col-md-2">
-                <input type="text" ng-model="cast.ageDisplay" disabled style="width: 75px"/>
+            <div class="col-md-2" ng-show="cast.ageSelect == 1">
+                <input type="text" ng-model="cast.ageDisplay" disabled style="width: 100px;text-align: center"/>
             </div>
         </div>
         <div class="form-group form-group-sm row" ng-show="cast.ageSelect == 1">
             <div class="col-md-3 col-md-offset-3 age " >
                 <!--<div slider ng-model="cast.age" start=1 end=10></div>-->
-                <div slider ng-from="cast.ageRange" ng-to="test.to" start=0 end=100 step=1></div>
+                <!--<div slider ng-from="cast.ageRangeFrom" ng-to="cast.ageRangeTo" start=0 end=100 step=1></div>-->
+                <!--<div id="slider-age" ng-init="initSlider()" style="margin-top:20px"></div>-->
+                <rzslider class="custom-slider"
+                          rz-slider-model="slider.minValue"
+                          rz-slider-high="slider.maxValue"
+                          rz-slider-options="slider.options"></rzslider>
+                <div>
+                    <span style="margin-left: 5%">5岁</span>
+                    <span style="margin-left: 73%">60岁</span>
+                </div>
+                <div style="margin-left: 20px;">
+                    <input ng-model="cast.minAge" style="width: 50px;text-align: center" onfocus="this.select();" onchange="angular.element(this).scope().toDisplayAgeMin()">
+                    <span>~</span>
+                    <input ng-model="cast.maxAge" style="width: 50px;text-align: center" onfocus="this.select();" onchange="angular.element(this).scope().toDisplayAgeMax()">
+                    <button class="btn btn-danger" ng-click="setAgeDisplay()">确定</button>
+                </div>
             </div>
         </div>
     </div>

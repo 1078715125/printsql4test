@@ -3,7 +3,7 @@
  */
 
 var myApp = angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'toaster','confirmDialogs','cgBusy',
-		'angular.chosen', 'ngAnimate','nouislider' ]);
+		'angular.chosen', 'ngAnimate','rzModule' ]);
 
 
 myApp.factory('formDataObject', function() {// 用于form file upload
