@@ -8,6 +8,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TestString {
+	@Test
+	public void number() throws Exception {
+		Integer i = 10000;
+		Integer j = 10000;
+		System.out.println(i.equals(10000));
+	}
 
 	@Test
 	public void test6List() {

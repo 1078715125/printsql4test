@@ -24,7 +24,10 @@
 <script src="${ctx}/js/angular/ui-bootstrap-tpls-0.13.0.js"></script>
 <script src="${ctx}/js/angular/angular-tooltips.js?v=${sysVersion}"></script>
 <link rel="stylesheet" href="${ctx}/js/angular/angular-tooltips.min.css">
+
+<script src="${ctx}/js/moment/moment.js?v=${sysVersion}"></script>
 <script src="${ctx}/js/dateselector/ndateselector.js?v=${sysVersion}"></script>
+
 <!-- chosen -->
 <script src="${ctx}/js/chosen/angular-chosen.min.js?v=${sysVersion}"></script>
 <script src="${ctx}/js/chosen/chosen.min.js?v=${sysVersion}"></script>
@@ -49,22 +52,22 @@
 <script src="${ctx}/js/angular/tinymce.js?v=${sysVersion}"></script>
 
 <%-- <script src="${ctx}/js/moment/moment.min.js?v=${sysVersion}"></script> --%>
-<script src="${ctx}/js/moment/moment.js?v=${sysVersion}"></script>
+
 <script src="${ctx}/js/angular/confirmDialogs.js?v=${sysVersion}"></script>
-<%-- angular slider--%>
+
+<!-- angular slider-->
 <%--<script src="${ctx}/js/angular/noUiSlider/nouislider.js?v=${sysVersion}"></script>--%>
 <%--<link rel="stylesheet" href="${ctx}/js/angular/noUiSlider/nouislider.css?v=${sysVersion}">--%>
-<script src="${ctx}/js/angular/angular-slider/rzslider.js?v=${sysVersion}"></script>
-<link rel="stylesheet" href="${ctx}/js/angular/angular-slider/rzslider.css?v=${sysVersion}">
+<script src="${ctx}/js/angular/angular-slider/rzslider.min.js?v=${sysVersion}"></script>
+<link rel="stylesheet" href="${ctx}/js/angular/angular-slider/rzslider.min.css?v=${sysVersion}">
 
 
 
 <!-- zTree树 -->
 <link rel="stylesheet" href="${ctx}/js/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <%--  <link rel="stylesheet" href="${ctx}/resources/js/zTree/css/demo.css" type="text/css">  --%>
-<script src="${ctx}/js/zTree/js/jquery.ztree.core-3.5.js"></script>
-<script src="${ctx}/js/zTree/js/jquery.ztree.excheck-3.5.js"></script>
-<script src="${ctx}/js/zTree/js/jquery.ztree.exedit-3.5.js"></script>
+<script src="${ctx}/js/zTree/js/jquery.ztree.all-3.5.js"></script>
+<script src="${ctx}/js/zTree/js/jquery.ztree.exhide-3.5.js"></script><%-- todo 喔哈哈--%>
 
 
 <script src="${ctx}/ctrl/myCtrl.js?v=${sysVersion}"></script>

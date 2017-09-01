@@ -92,14 +92,14 @@ myApp.controller('collapseCheckBox', function ($rootScope, $scope, $interval, $h
                 //     return "无限制";
                 // }
                 // return value + "岁";
-                if(validAge(value)){
+                if (validAge(value)) {
                     return value + "岁";
                 }
                 return "无限制";
             }
         }
     };
-    $scope.cast.ageDisplay = "18岁~50岁";
+    $scope.cast.ageDisplay = "18~50岁";
 
     $scope.initInterest = function () {
         var data = $scope.data;
@@ -185,6 +185,22 @@ myApp.controller('collapseCheckBox', function ($rootScope, $scope, $interval, $h
             {id: 25, pId: 2, name: "河南", checked: true},
             {id: 26, pId: 2, name: "山西", checked: true}
         ];
+        var zNodes_area = [
+            {id: 11, pId: 1, name: "搞笑", checked: true},
+            {id: 12, pId: 1, name: "图片", checked: true},
+            {id: 13, pId: 1, name: "奇闻趣事", checked: true},
+            {id: 14, pId: 1, name: "全球华人富豪榜", checked: true},
+            {id: 15, pId: 1, name: "星座", checked: true},
+            {id: 16, pId: 1, name: "娱乐", checked: true},
+            {id: 1,  pId: 0, name: "其他", checked: true, open: true},
+            {id: 21, pId: 2, name: "北京", checked: true},
+            {id: 22, pId: 2, name: "天津", checked: true},
+            {id: 23, pId: 2, name: "河北", checked: true},
+            {id: 24, pId: 2, name: "山东", checked: true},
+            {id: 2,  pId: 0, name: "重点城市", checked: true, open: true},
+            {id: 25, pId: 2, name: "河南", checked: true},
+            {id: 26, pId: 2, name: "山西", checked: true}
+        ];
         //构建树结构
         var setting = {
             check: {
@@ -221,7 +237,85 @@ myApp.controller('collapseCheckBox', function ($rootScope, $scope, $interval, $h
             }
         };
         $.fn.zTree.init($("#positionTree"), setting, zNodes);
+
+        //构建地域树结构
+        var setting_area = {
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                onCheck: function () {
+
+                }
+            }
+        };
+        $.fn.zTree.init($("#areaTree"), setting_area, zNodes_area);
     };
+
+    $scope.searchArea = function(){
+        searchNode("name",$scope.searchStr,$.fn.zTree.getZTreeObj("areaTree"));
+    };
+
+    // 模糊搜索name满足条件的节点
+    function searchNode(key,value,zTree) {
+        if (value === "") {
+            closeAll(zTree);
+            var hidden_nodes = zTree.getNodesByParam("isHidden", true);
+            zTree.showNodes(hidden_nodes);
+            return;
+        }
+        nodeList = zTree.getNodesByParamFuzzy(key, value);
+        /**不查询父级
+         for(var x = 0 ; x<nodeList.length ; x++){
+                if(nodeList[x].isParent){
+                    nodeList.splice(x--,1);
+                }
+            }
+         */
+        //zTree.cancelSelectedNode();
+        nodeList = zTree.transformToArray(nodeList);
+        updateNodes(true,value,key,zTree);
+    }
+    function updateNodes(highlight,value,keyType,zTree) {
+        var allNode = zTree.transformToArray(zTree.getNodes());
+        zTree.hideNodes(allNode);
+        for(var n in nodeList){
+            findParent(zTree,nodeList[n]);
+        }
+        closeAll(zTree);
+        zTree.showNodes(nodeList);
+        nodeList = zTree.getNodesByParamFuzzy(keyType, value);
+        for( var i=0; i<nodeList.length; i++) {
+            //zTree.updateNode(nodes[i]);
+            zTree.selectNode(nodeList[i],true);
+        }
+    }
+
+    function findParent(zTree,node){
+        zTree.expandNode(node,true,false,false);
+        var pNode = node.getParentNode();
+        if(pNode != null){
+            nodeList.push(pNode);
+            findParent(zTree,pNode);
+        }
+
+    }
+
+    function getFontCss(treeId, treeNode) {
+        return (!!treeNode.highlight) ? {color:"#ffffff", "font-weight":"bold"} : {color:"#333", "font-weight":"normal"};
+    }
+
+    function closeAll(zTree){
+        zTree.expandAll(false); //关闭所有节点
+        var nodes = zTree.getNodes();
+        zTree.expandNode(nodes[0], true, false, true);  //打开根节点
+    }
+
 
     /**
      * 初始化年龄slider条
@@ -258,29 +352,38 @@ myApp.controller('collapseCheckBox', function ($rootScope, $scope, $interval, $h
     $scope.resetAge = function () {
         $scope.slider.minValue = 18;
         $scope.slider.maxValue = 50;
-        $scope.cast.ageDisplay = "18岁~50岁";
-    };
+        $scope.cast.ageDisplay = "18~50岁";
+        if($scope.cast.ageSelect == 0){
+            angular.element("#age-slider").collapse('hide');
+        } else {
+            angular.element("#age-slider").collapse('show');
+        }
 
+    };
+    angular.element("#age-slider").collapse('show');
     $scope.toDisplayAgeMin = function () {
-        if ($scope.cast.minAge > $scope.cast.maxAge) {
+        if (isNaN($scope.cast.minAge) || !validAge($scope.cast.minAge) ||
+            (!isNaN($scope.cast.maxAge) && $scope.cast.minAge > $scope.cast.maxAge)) {
             $scope.cast.minAge = AGE_MIN_VALUE;
         }
         $scope.slider.minValue = $scope.cast.minAge;
     };
     $scope.toDisplayAgeMax = function () {
-        if ($scope.cast.minAge > $scope.cast.maxAge) {
+        if (isNaN($scope.cast.maxAge) || !validAge($scope.cast.maxAge) ||
+            (!isNaN($scope.cast.minAge) && $scope.cast.minAge > $scope.cast.maxAge)) {
+            // if ($scope.cast.minAge > $scope.cast.maxAge) {
             $scope.cast.maxAge = AGE_MAX_VALUE;
         }
         $scope.slider.maxValue = $scope.cast.maxAge;
     };
 
     $scope.setAgeDisplay = function () {
-        var minValue = $scope.slider.minValue + "岁";
+        var minValue = $scope.slider.minValue;
         var maxValue = $scope.slider.maxValue + "岁";
         if ($scope.slider.minValue < 5 && validAge($scope.slider.maxValue)) {
             $scope.cast.ageDisplay = maxValue + "以下";
         } else if (validAge($scope.slider.minValue) && $scope.slider.maxValue > 60) {
-            $scope.cast.ageDisplay = minValue + "以上";
+            $scope.cast.ageDisplay = minValue + "岁以上";
         } else if (!validAge($scope.slider.minValue) && !validAge($scope.slider.maxValue)) {
             $scope.cast.ageSelect = 0;
         } else {
@@ -320,14 +423,14 @@ myApp.controller('collapseCheckBox', function ($rootScope, $scope, $interval, $h
      * 绑定class：age的回车事件
      * @param event
      */
-    $scope.ageKeyDown = function(event){
-        if(!event){
+    $scope.ageKeyDown = function (event) {
+        if (!event) {
             event = window.event;//火狐浏览器
         }
         //也可用下面的代替上面的if语句
         //document.all可以判断浏览器是否是IE
-        var event=document.all?window.event:event;
-        if((event.keyCode || event.which) == 13){
+        var event = document.all ? window.event : event;
+        if ((event.keyCode || event.which) == 13) {
             $scope.setAgeDisplay();
         }
     };
